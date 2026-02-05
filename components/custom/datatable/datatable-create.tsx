@@ -29,16 +29,18 @@ import {
 import { ArrowUpDown, Settings2 } from "lucide-react"
 import { DropdownMenuLabel } from "@radix-ui/react-dropdown-menu"
 import { useIsMobile } from "@/hooks/use-mobile"
-import LoadingFormData from "../loading-form-data"
-import NoRecordFound from "../placeholder/no-record-found"
-import { Separator } from "../ui/separator"
-import { useThemeStore } from "@/hooks/use-theme-store"
+import LoadingFormData from "../placeholders/loading-form-data"
+import NoRecordFound from "../placeholders/no-record-found"
+import { Separator } from "@/components/ui/separator"
+
+
+
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
   data: TData[],
   children : React.ReactNode,
-  isLoading: boolean
+  isLoading: boolean,
 }
 
 export function CreateDataTable<TData, TValue>({
@@ -67,7 +69,7 @@ export function CreateDataTable<TData, TValue>({
         getSortedRowModel: getSortedRowModel(),
     })
     const isMobile = useIsMobile();
-    const {fontSize} = useThemeStore();
+
    
     return (
         <div >
@@ -204,7 +206,7 @@ export function CreateDataTable<TData, TValue>({
                                                     data-state={row.getIsSelected() && "selected"}
                                                 >
                                                     {row.getVisibleCells().map((cell) => (
-                                                        <TableCell key={cell.id} className={`${fontSize} min-w-[150px]  md:min-w-0 xl:min-w-0`}>
+                                                        <TableCell key={cell.id} className={` min-w-[150px]  md:min-w-0 xl:min-w-0`}>
                                                             {flexRender(cell.column.columnDef.cell, cell.getContext())}
                                                         </TableCell>
                                                     ))}
@@ -225,9 +227,7 @@ export function CreateDataTable<TData, TValue>({
                             </div>
                         </div>
                     )
-                   
                 }
-               
             </div>
            
         </div>

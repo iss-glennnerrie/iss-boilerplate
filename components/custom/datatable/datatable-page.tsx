@@ -1,10 +1,9 @@
 
 import { Button } from '@/components/ui/button';
-import useDatatableSet from '@/hooks/use-datatable-set';
+import useDatatableSet from '@/hooks/layout/use-datatable-set';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { cn } from '@/lib/utils';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import React from 'react'
 
 interface DatatablePageProps {
     tableId: string;

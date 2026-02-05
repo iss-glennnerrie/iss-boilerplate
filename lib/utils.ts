@@ -53,3 +53,13 @@ export const hexToHSL = (hex: string) => {
     const hsl = Math.round(h) + ", " + Math.round(s * 100) + "%, " + Math.round(l * 100) + "%";
     return hsl;
 };
+
+export function appNameToSlug(appName?: string | null): string {
+  if (!appName) return "";
+
+  return appName
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}

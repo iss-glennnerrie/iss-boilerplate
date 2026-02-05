@@ -1,6 +1,6 @@
 import React from 'react'
 import { SidebarInset, SidebarProvider } from '../ui/sidebar'
-import { AppSidebar } from '../app-sidebar'
+import { AppSidebar } from './sidebar/app-sidebar'
 import AppHeader from './app-header';
 
 const AppLayout = ({ children }: {children: React.ReactNode; }) => {

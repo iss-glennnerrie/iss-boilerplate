@@ -2,16 +2,11 @@
 "use client";
 
 import AppLayout from "@/components/custom/app-layout";
-import CustomThemeProvider from "@/providers/custom-theme-provider";
 
 
 export default function PageLayout({ children }: { children: React.ReactNode }) {
-   
 
     return (
-        <CustomThemeProvider>
-            {/* {isLoadingMask && <LoadingMask message="Preparing your data ...."/>} */}
-            <AppLayout>{children}</AppLayout>
-        </CustomThemeProvider>
+       <AppLayout>{children}</AppLayout>
     );
 }

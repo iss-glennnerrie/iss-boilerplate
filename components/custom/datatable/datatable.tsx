@@ -10,6 +10,7 @@ import DatatablePage from './datatable-page'
 import useDatatableSet from '@/hooks/layout/use-datatable-set'
 import { useDebounce } from '@/hooks/layout/use-debounde'
 import { Input } from '@/components/ui/input'
+import { AppError } from '../placeholders/app-error'
 
 interface DatatableData<T> {
     data: T[];
@@ -24,9 +25,10 @@ interface DatatableProps<T> {
     children?: ReactNode; 
     tableId: string;
     isLoading: boolean;
+    isError? : boolean;
 }
   
-const Datatable = <T,>({ data, columns, isLoading, tableId }: DatatableProps<T>) => {    
+const Datatable = <T,>({ data, columns, isLoading, tableId, isError}: DatatableProps<T>) => {    
 
     
 
@@ -39,7 +41,11 @@ const Datatable = <T,>({ data, columns, isLoading, tableId }: DatatableProps<T>)
             setKeyword(debouncedSearch);
         }
     }, [debouncedSearch, keyword]);
-     
+   
+    if (isError) {
+        return <AppError/>
+    }
+
     return (
         <>
             <CreateDataTable columns={columns} data={data?.data} isLoading={isLoading}>

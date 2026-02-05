@@ -2,7 +2,6 @@
 import { useThemeStore } from "@/hooks/layout/use-theme-store";
 import useTitle from "@/hooks/layout/use-title";
 import { useEffect } from "react";
-
 interface AppContentProps {
     title?: string | null;
     description?: string | null;
@@ -21,6 +20,7 @@ export default function AppContent({ title, children, description }: AppContentP
 
     return (
         <div className={`${fontSize} p-4`}>
+          
             <div className="mb-3">
                 <div className="text-xl font-bold">{title}</div>
                 {description && <div className="text-base text-muted-foreground">{description}</div>}

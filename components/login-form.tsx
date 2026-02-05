@@ -16,18 +16,24 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import {
     Form,
     FormControl,
-    FormDescription,
     FormField,
     FormItem,
     FormLabel,
     FormMessage,
 } from "@/components/ui/form"
 import { Spinner } from "./ui/spinner";
-import { Save } from "lucide-react";
+import { LogIn } from "lucide-react";
 import { FieldDescription } from "./ui/field";
+import { useRouter } from "next/navigation";
+import useUserStore from "@/hooks/auth/use-user-store";
+import { StoreToken } from "@/services/handlers/token-handler";
+
 export function LoginForm({ className, ...props }: React.ComponentProps<"div">) {
-    const queryClient = useQueryClient();
+
+
     const handleError = useFormError<z.infer<typeof authSchema>>();
+    const router = useRouter();
+    const {setUser} = useUserStore();
     const form = useForm<z.infer<typeof authSchema>>({
         resolver: zodResolver(authSchema),
         defaultValues: {
@@ -35,13 +41,13 @@ export function LoginForm({ className, ...props }: React.ComponentProps<"div">) 
             password: "",
         },
     });
+
     const mutation = useMutation({
         mutationFn: (request: z.infer<typeof authSchema>) => authApi.login(request),
-        onSuccess: (data) => {
-            queryClient.invalidateQueries({
-                queryKey: ["designations"],
-            });
-            toast.success(data.data.message, { duration: 5000 });
+        onSuccess: (response) => {
+            setUser(response.data.data.user)
+            StoreToken(response.data.data.access_token);
+            router.push("/dashboard");
         },
         onError: (error: AxiosError) => {
             handleError(error, form);
@@ -50,7 +56,6 @@ export function LoginForm({ className, ...props }: React.ComponentProps<"div">) 
      const onSubmit = (values: z.infer<typeof authSchema>) => {
         console.log(values)
         mutation.mutateAsync(values)
-
     }
 
     return (
@@ -84,24 +89,24 @@ export function LoginForm({ className, ...props }: React.ComponentProps<"div">) 
                                         <FormLabel>Password</FormLabel>
                                         <FormMessage />
                                         <FormControl>
-                                            <Input placeholder="Password ..." {...field} />
+                                            <Input type="password" placeholder="Password ..." {...field} />
                                         </FormControl>
                                     </FormItem>
                                 )}
                             />
                             <div className="pt-2 w-full flex">
                                 <Button
-                                    className="w-[150px] ml-auto transition-all duration-200 hover:shadow-md"
+                                    className="w-full ml-auto transition-all duration-200 hover:shadow-md"
                                     type="submit"
                                     disabled={mutation.isPending}
                                 >
                                     {mutation.isPending ? (
                                         <>
-                                           <Spinner/> Saving ...
+                                           <Spinner/> Submitting ...
                                         </>
                                     ) : (
                                         <>
-                                            <Save /> Save
+                                            <LogIn /> Login
                                         </>
                                     )}
                                 </Button>
