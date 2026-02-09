@@ -133,7 +133,9 @@ export function CreateDataTable<TData, TValue>({
                                         return (
                                             <div key={cell.id} className="grid grid-cols-12 gap-2">
                                                 <div className="col-span-5">
+                                                    
                                                     <span className="text-xs text-muted-foreground">
+                                                        {/* @ts-ignore */}
                                                         {columnDef?.header}
                                                     </span>
                                                 </div>
