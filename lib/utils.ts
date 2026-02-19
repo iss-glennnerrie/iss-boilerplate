@@ -50,16 +50,36 @@ export const hexToHSL = (hex: string) => {
         h *= 60;
     }
 
-    const hsl = Math.round(h) + ", " + Math.round(s * 100) + "%, " + Math.round(l * 100) + "%";
-    return hsl;
+    // const hsl = Math.round(h) + ", " + Math.round(s * 100) + "%, " + Math.round(l * 100) + "%";
+    // return hsl;
+    return `${Math.round(h)} ${Math.round(s * 100)}% ${Math.round(l * 100)}%`;
 };
 
-export function appNameToSlug(appName?: string | null): string {
-  if (!appName) return "";
+export function hexToOKLCH(hex: string): string {
+    const el = document.createElement("div");
+    el.style.color = hex;
+    document.body.appendChild(el);
 
-  return appName
-    .toLowerCase()
-    .trim()
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-+|-+$/g, "");
+    const computed = getComputedStyle(el).color;
+    document.body.removeChild(el);
+
+    // Create temp element to force OKLCH conversion
+    const temp = document.createElement("div");
+    temp.style.color = computed;
+    temp.style.color = `oklch(from ${computed} l c h)`;
+
+    document.body.appendChild(temp);
+    const oklch = getComputedStyle(temp).color;
+    document.body.removeChild(temp);
+
+    return oklch;
+}
+export function appNameToSlug(appName?: string | null): string {
+    if (!appName) return "";
+
+    return appName
+        .toLowerCase()
+        .trim()
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/^-+|-+$/g, "");
 }

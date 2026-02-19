@@ -1,6 +1,6 @@
 "use client";
 
-import { BadgeCheck, Bell, Check, ChevronsUpDown, CreditCard, LogOut, LogOutIcon, Sparkles, X } from "lucide-react";
+import { BadgeCheck, Bell, Check, ChevronsUpDown, CreditCard, LogOut, LogOutIcon, Palette, Sparkles, X } from "lucide-react";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
@@ -14,6 +14,7 @@ import { toast } from "sonner";
 import AppModal from "../modal/app-modal";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 export function AppSidebarUser() {
     const { isMobile } = useSidebar();
@@ -74,6 +75,12 @@ export function AppSidebarUser() {
                                     </div>
                                 </div>
                             </DropdownMenuLabel>
+                            <Link href="/appearance">
+                                <DropdownMenuItem>
+                                    <Palette />
+                                    Appearance
+                                </DropdownMenuItem>
+                            </Link>
                             <DropdownMenuItem
                                 onClick={() => {
                                     setOpen(true);
@@ -94,14 +101,21 @@ export function AppSidebarUser() {
                     <b>Are you sure you want to log out?</b>
                     <span className="text-muted-foreground text-sm">This process cannot be undone</span>
                     <div className="flex gap-5 mt-4">
-                        <Button className="mr-auto" variant="secondary" onClick={()=>{
-                            setOpen(false)
-                        }}>
+                        <Button
+                            className="mr-auto"
+                            variant="secondary"
+                            onClick={() => {
+                                setOpen(false);
+                            }}
+                        >
                             <X /> No, I want to stay
                         </Button>
-                        <Button className="ml-auto" onClick={()=>{
-                            logoutMutation.mutate()
-                        }}>
+                        <Button
+                            className="ml-auto"
+                            onClick={() => {
+                                logoutMutation.mutate();
+                            }}
+                        >
                             <Check /> Yes, log me out
                         </Button>
                     </div>
